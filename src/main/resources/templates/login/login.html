@@ -10,7 +10,7 @@
 </head>
 <body class="text-center">
     <h1>Play Money</h1>
-    <form th:action="@{'/conta'}" method="GET" th:object="${playMoney}">
+    <form th:action="@{'/login'}" method="POST" th:object="${playMoney}">
         <label>
             Partida: <br/>
             <input type="text" th:field="*{partida}"/>
