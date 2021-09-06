@@ -5,15 +5,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class LoginController {
+public class ContaController {
     
-    @GetMapping("/login")
-    public String getLogin(){
-        return "login/login";
+    @GetMapping("/conta")
+    public String getPartida(){
+        return "login/conta";
     }
 
-    @PostMapping("/login")
-    public String postLogin(){
-        return "redirect:/login";
+    @PostMapping("/conta")
+    public String postPartida(){
+        return "redirect:/conta";
     }
 }

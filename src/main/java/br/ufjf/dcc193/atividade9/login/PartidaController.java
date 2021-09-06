@@ -14,6 +14,6 @@ public class PartidaController {
 
     @PostMapping("/partida")
     public String postPartida(){
-        return "login/partida";
+        return "redirect:/partida";
     }
 }
