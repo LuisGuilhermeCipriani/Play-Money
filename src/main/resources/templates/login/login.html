@@ -10,16 +10,21 @@
 </head>
 <body class="text-center">
     <h1>Play Money</h1>
-    <form th:action="@{'/conta'}" method="GET">
+    <form th:action="@{'/conta'}" method="GET" th:object="${playMoney}">
         <label>
             Partida: <br/>
-            <input type="text" name="partida"/>
+            <input type="text" th:field="*{partida}"/>
         </label>
         <label>
             Conta: <br/>
-            <input type="text" name="conta"/>
+            <input type="text" th:field="*{conta}"/>
         </label>
         <input type="submit" value="Entrar" class="btn btn-primary">
+        <ul>
+            <li th:each="error: ${#fields.detailedErrors()}">
+                <strong th:text="${error.message}"> Mensagem de Erro</strong>
+            </li>
+        </ul>
     </form>
 </body>
 </html>
