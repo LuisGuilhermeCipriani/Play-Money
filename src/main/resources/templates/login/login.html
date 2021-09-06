@@ -13,13 +13,14 @@
 <body class="text-center">
     <br /><br />
     <h1>Play Money</h1>
-    <form th:action="@{'/login'}" method="POST" th:object="${playMoney}">
+    <form th:action="@{'/partida'}" method="POST" th:object="${playMoney}">
         <div class="form-group"></div>
         <label><br /><br />
             Partida:
             <input class="form-control" type="text" th:field="*{partida}"
                 th:classappend="${#fields.hasErrors('partida')? 'is-invalid' : ''}" />
-            <strong class="text-danger" th:if="${#fields.hasErrors('partida')}" th:errors="*{partida}">Mensagem de erro da partida</strong>
+            <strong class="text-danger" th:if="${#fields.hasErrors('partida')}" 
+            th:errors="*{partida}">Mensagem de erro da partida</strong>
         </label><br /><br />
         <label>
             Conta:
