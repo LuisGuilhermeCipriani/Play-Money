@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class LogAspect {
-    @Before("execution(* br.ufjf.dcc193.atividade9.login.LoginController.getLogin(..))")
+    @Before("execution(* *..*.*Controller.*(..))")
     public void startLog(JoinPoint jp){
         System.out.println("Método iniciando: " + jp.getSignature());
     }
 
-    @After("execution(* br.ufjf.dcc193.atividade9.login.LoginController.getLogin(..))")
+    @After("execution(* *..*.*Controller.*(..))")
     public void endLog(JoinPoint jp){
         System.out.println("Método concluído: " + jp.getSignature());
     }
