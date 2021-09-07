@@ -11,4 +11,22 @@ public class HomeController {
         model.addAttribute("conteudo", "login/home::conteudo");
         return "login/defaultLayout";
     }
+
+    @GetMapping("/operacoes.html")
+    public String getOperacoes(Model model){
+        model.addAttribute("conteudo", "login/operacoes::conteudo");
+        return "login/defaultLayout";
+    }
+
+    @GetMapping("/operacoesContas.html")
+    public String getOperacoesContas(Model model){
+        model.addAttribute("conteudo", "login/operacoesContas::conteudo");
+        return "login/defaultLayout";
+    }
+
+    @GetMapping("/operacoesOrdem.html")
+    public String getOperacoesOrdem(Model model){
+        model.addAttribute("conteudo", "login/operacoesOrdem::conteudo");
+        return "login/defaultLayout";
+    }
 }
