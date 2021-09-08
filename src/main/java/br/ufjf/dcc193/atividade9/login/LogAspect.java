@@ -22,4 +22,19 @@ public class LogAspect {
             throw e;
         }
     }
+
+    @Around("execution(* *..*.*DAOImpl*.*(..))")
+    public Object doDAOLog(ProceedingJoinPoint jp) throws Throwable {
+        System.out.println("Método iniciando: " + jp.getSignature());
+        try {
+            Object retorno = jp.proceed();
+            System.out.println("Método concluído: " + jp.getSignature());
+            return retorno;
+
+        } catch (Exception e) {
+            System.out.println("Método interrrompido: " + jp.getSignature());
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
