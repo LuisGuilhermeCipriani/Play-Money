@@ -1,8 +1,12 @@
 package br.ufjf.dcc193.atividade9.login;
 
+import java.util.Date;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 
@@ -15,4 +19,12 @@ public class PlayMoney {
     private String partida;
 
     private String conta;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date data = new Date();
+
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private Date hora = new Date();
+
+    private Float montante;
 }

@@ -18,7 +18,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public String postLogin(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model){
-
         if(bindingResult.hasErrors()){
             return getLogin(playMoney, model);
         } else {
