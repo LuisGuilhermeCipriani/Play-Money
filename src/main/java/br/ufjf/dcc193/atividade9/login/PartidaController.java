@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class PartidaController {
     
-    @GetMapping("/partida")
+   /* @GetMapping("/partida")
     public String getPartida(@ModelAttribute PlayMoney playMoney, Model model){
         return "login/partida";
     }
@@ -24,5 +24,5 @@ public class PartidaController {
         } else {
             return "redirect:/partida";
         }
-    }
+    }*/
 }

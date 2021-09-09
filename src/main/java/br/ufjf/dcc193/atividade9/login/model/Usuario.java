@@ -12,4 +12,5 @@ public class Usuario {
     private Date data;
     private Date hora;
     private Float montante;
+    private String role;
 }

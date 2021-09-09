@@ -13,9 +13,9 @@ import lombok.Data;
 @Data
 public class PlayMoney {
 
-    @Pattern(regexp = "^[a-fA-F0-9]+$")
-    @Min(6)
-    @Max(6)
+    //@Pattern(regexp = "^[a-fA-F0-9]+$")
+    //@Min(6)
+    //@Max(6)
     private String partida;
 
     private String conta;
