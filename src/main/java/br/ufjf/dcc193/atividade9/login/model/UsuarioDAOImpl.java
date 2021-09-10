@@ -1,6 +1,9 @@
 package br.ufjf.dcc193.atividade9.login.model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -40,8 +43,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override
     public int updateOne(Usuario usuario) throws DataAccessException {
-        // TODO Auto-generated method stub
-        return 0;
+        int n = jdbc.update("UPDATE usuario set partida = ? where conta = ?", 
+                usuario.getPartida(), usuario.getConta());
+        return n;
     }
 
     @Override
@@ -52,8 +56,22 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override
     public List<Usuario> selectAll() throws DataAccessException {
-        // TODO Auto-generated method stub
-        return null;
+        List<Usuario> usuarios = new ArrayList<>();
+
+        List<Map<String, Object>> resultados = jdbc.queryForList("SELECT * FROM usuario");
+        for(Map<String, Object> resultado: resultados){
+            Usuario usuario = new Usuario();
+            usuario.setPartida((String)resultado.get("partida"));
+            usuario.setConta((String)resultado.get("conta"));
+            usuario.setPartida((String)resultado.get("partida"));
+            usuario.setData((Date)resultado.get("data"));
+            usuario.setHora((Date)resultado.get("hora"));
+            usuario.setMontante((Double)resultado.get("montante"));
+            usuario.setRole((String)resultado.get("role"));
+            usuarios.add(usuario);
+        }
+
+        return usuarios;
     }
     
 }

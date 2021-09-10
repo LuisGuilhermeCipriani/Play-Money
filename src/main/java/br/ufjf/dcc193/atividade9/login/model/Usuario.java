@@ -11,6 +11,6 @@ public class Usuario {
     private String conta;
     private Date data;
     private Date hora;
-    private Float montante;
+    private Double montante;
     private String role;
 }

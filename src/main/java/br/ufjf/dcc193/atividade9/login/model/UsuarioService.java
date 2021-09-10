@@ -1,5 +1,7 @@
 package br.ufjf.dcc193.atividade9.login.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,5 +13,13 @@ public class UsuarioService {
     public boolean insert(Usuario usuario){
         int n = dao.insertOne(usuario);
         return (n>0);  
+    }
+
+    public List<Usuario> selectAll() {
+        return dao.selectAll();
+    }
+
+    public void updateOne(Usuario usuario) {
+        dao.updateOne(usuario);
     }
 }

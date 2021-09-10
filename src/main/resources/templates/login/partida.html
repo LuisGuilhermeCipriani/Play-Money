@@ -26,7 +26,7 @@
             </label>
         </div> <br /><br />
     </form>
-    <form action="home" method="POST" class="container">
+    <form th:action="@{'/novaPartida'}" method="POST" class="container" th:object="${playMoney}">
         <div>
             <input type="submit" value="Criar Nova Partida" class="btn btn-primary">
         </div>
