@@ -24,13 +24,14 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override
     public int insertOne(Usuario usuario) throws DataAccessException {
-        int n = jdbc.update("INSERT INTO usuario(conta, partida, data, hora, montante, role) VALUES(?,?,?,?,?,?);",
+        int n = jdbc.update("INSERT INTO usuario(conta, partida, data, hora, montante, role) VALUES(?,?,?,?,?,?,?);",
         usuario.getConta(),
         usuario.getPartida(),
         usuario.getData(),
         usuario.getHora(),
         usuario.getMontante(),
-        usuario.getRole()
+        usuario.getRole(),
+        usuario.getDestino()
         );
         return n;
     }
@@ -68,6 +69,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
             usuario.setHora((Date)resultado.get("hora"));
             usuario.setMontante((Double)resultado.get("montante"));
             usuario.setRole((String)resultado.get("role"));
+            usuario.setDestino((Boolean)resultado.get("destino"));;
             usuarios.add(usuario);
         }
 

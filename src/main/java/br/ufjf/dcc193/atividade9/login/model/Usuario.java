@@ -13,4 +13,5 @@ public class Usuario {
     private Date hora;
     private Double montante;
     private String role;
+    private Boolean destino;
 }

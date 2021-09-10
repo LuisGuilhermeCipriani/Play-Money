@@ -4,5 +4,6 @@ CREATE TABLE IF NOT EXISTS usuario (
     data DATE,
     hora DATE,
     montante FLOAT,
-    role VARCHAR(150)
+    role VARCHAR(150),
+    destino BOOLEAN
 );

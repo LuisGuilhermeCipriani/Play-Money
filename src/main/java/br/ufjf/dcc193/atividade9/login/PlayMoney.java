@@ -23,4 +23,7 @@ public class PlayMoney {
     private Date hora = new Date();
 
     private Double montante;
+
+    private Boolean destino;
+
 }

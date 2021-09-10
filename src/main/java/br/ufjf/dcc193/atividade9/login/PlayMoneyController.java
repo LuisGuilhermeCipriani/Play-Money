@@ -27,8 +27,7 @@ public class PlayMoneyController {
     }
 
     @PostMapping("/partida")
-    public String postPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
-            Model model) {
+    public String postPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             return getPartida(playMoney, model);
@@ -63,8 +62,7 @@ public class PlayMoneyController {
     }
 
     @PostMapping("/novaPartida")
-    public String postNovaPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
-            Model model) {
+    public String postNovaPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
         Random r = new Random(6);
         System.out.println("Numero aleatorio: " + r);
         System.out.println("Valor da conta 2: " + playMoney.getConta());
