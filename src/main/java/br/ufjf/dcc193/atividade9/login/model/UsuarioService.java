@@ -19,7 +19,11 @@ public class UsuarioService {
         return dao.selectAll();
     }
 
-    public void updateOne(Usuario usuario) {
-        dao.updateOne(usuario);
+    public void updatePartida(Usuario usuario) {
+        dao.updatePartida(usuario);
+    }
+
+    public void updateMontante(Usuario usuario) {
+        dao.updateMontante(usuario);
     }
 }

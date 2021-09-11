@@ -24,6 +24,5 @@ public class PlayMoney {
 
     private Double montante;
 
-    private Boolean destino;
-
+    private String destino;
 }

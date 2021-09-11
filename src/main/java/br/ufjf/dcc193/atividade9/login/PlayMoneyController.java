@@ -1,6 +1,9 @@
 package br.ufjf.dcc193.atividade9.login;
 
 import java.nio.charset.Charset;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -27,21 +30,12 @@ public class PlayMoneyController {
     }
 
     @PostMapping("/partida")
-    public String postPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
+    public String postPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
+            Model model) {
 
         if (bindingResult.hasErrors()) {
             return getPartida(playMoney, model);
         } else {
-            /*
-             * Usuario usuario = new Usuario(); Date dataHora = new Date();
-             * usuario.setConta(playMoney.getConta());
-             * usuario.setPartida(playMoney.getPartida()); usuario.setData(dataHora);
-             * usuario.setHora(dataHora); usuario.setMontante(playMoney.getMontante());
-             * usuario.setRole("COMUM"); if (usuarioService.insert(usuario)) { return
-             * "redirect:/home"; } else { return "redirect:/login"; }
-             */
-
-            System.out.println("Valor da conta1: " + playMoney.getConta());
             List<Usuario> lista = usuarioService.selectAll();
             for (Usuario usuario : lista) {
                 if (usuario.getConta().equals(playMoney.getConta())) {
@@ -62,21 +56,17 @@ public class PlayMoneyController {
     }
 
     @PostMapping("/novaPartida")
-    public String postNovaPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
+    public String postNovaPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
+            Model model) {
         Random r = new Random(6);
-        System.out.println("Numero aleatorio: " + r);
-        System.out.println("Valor da conta 2: " + playMoney.getConta());
         List<Usuario> lista = usuarioService.selectAll();
         for (Usuario usuario : lista) {
-            if (usuario.getConta().equals("123")) {
-                System.out
-                        .println("Igual: Usuario: " + usuario.getConta() + " , " + "Digitado: " + playMoney.getConta());
+            if (usuario.getConta().equals(playMoney.getConta())) {
                 usuario.setPartida(geraIdentificadorAleatorio(6));
-                usuarioService.updateOne(usuario);
+                usuarioService.updatePartida(usuario);
                 return "login/home";
             } else {
-                System.out.println(
-                        "Diferente: Usuario: " + usuario.getConta() + " , " + "Digitado: " + playMoney.getConta());
+                return "login/partida";
             }
         }
         return "login/partida";

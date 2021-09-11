@@ -17,18 +17,13 @@
         <div>
             <label>
                 Identificador de Partida:
-                <input class="form-control" type="text" name="partida" id="partida" th:field="*{partida}"
-                th:classappend="${#fields.hasErrors('partida')? 'is-invalid' : ''}" /><br/>
-                <input type="hidden" name="conta" id="conta" th:field="*{conta}"/>
-                <input type="submit" value="Entrar" class="btn btn-primary"><br/><br/>
+                <input type="text" name="partida" id="partida" th:field="*{partida}"
+                th:classappend="${#fields.hasErrors('partida')? 'is-invalid' : ''}" />
+                <input type="submit" th:formaction="@{'/partida'}" value="Entrar" class="btn btn-primary"><br/><br/>
                 <strong class="text-danger" th:if="${#fields.hasErrors('partida')}" 
                 th:errors="*{partida}">Mensagem de erro da partida</strong>
+                <input type="submit" th:formaction="@{'/novaPartida'}" value="Criar Nova Partida" class="btn btn-primary">
             </label>
-        </div> <br /><br />
-    </form>
-    <form th:action="@{'/novaPartida'}" method="POST" class="container" th:object="${playMoney}">
-        <div>
-            <input type="submit" value="Criar Nova Partida" class="btn btn-primary">
         </div>
     </form>
 </body>
