@@ -12,49 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
 
     @GetMapping("/home")
-    public String getPartida(@ModelAttribute PlayMoney playMoney, Model model){
+    public String getHome(@ModelAttribute PlayMoney playMoney, Model model){
         return "login/home";
     }
 
     @PostMapping("/home")
-    public String postPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model){
+    public String postHome(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model){
         
         if(bindingResult.hasErrors()){
-            return getPartida(playMoney, model);
+            return getHome(playMoney, model);
         } else {
             return "login/home";
         }
     }
-    /*@GetMapping("/home.html")
-    public String getHome(Model model){
-        model.addAttribute("conteudo", "login/home::conteudo");
-        return "login/defaultLayout";
-    }
-    
-
-    /*@GetMapping("/operacoes.html")
-    public String getOperacoes(Model model){
-        model.addAttribute("conteudo", "login/operacoes::conteudo");
-        return "login/defaultLayout";
-    }
-
-    @PostMapping("/home")
-    public String postLogin(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
-
-        return "login/home";
-    }
-
-    @GetMapping("/operacoesContas.html")
-    public String getOperacoesContas(Model model){
-        model.addAttribute("conteudo", "login/operacoesContas::conteudo");
-        return "login/defaultLayout";
-    }
-
-    @GetMapping("/operacoesOrdem.html")
-    public String getOperacoesOrdem(Model model){
-        model.addAttribute("conteudo", "login/operacoesOrdem::conteudo");
-        return "login/defaultLayout";
-    }*/
 
     @PostMapping("/operacoes")
     public String postOperacoes(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {

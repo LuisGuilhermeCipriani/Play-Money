@@ -15,12 +15,12 @@
 
     <form th:action="@{'/operacoesContas'}" method="POST" th:object="${playMoney}">
         <div class="form-group"></div>
-        <input type="submit" value="Operações agrupadas por contas" class="btn btn-primary"><br /><br />
+        <input type="submit" value="Lista com a soma das operações, agrupadas por contas" class="btn btn-primary"><br /><br />
     </form>
 
     <form th:action="@{'/operacoesOrdem'}" method="POST" th:object="${playMoney}">
         <div class="form-group"></div>
-        <input type="submit" value="Operações agrupadas da mais nova para a mais antiga" class="btn btn-primary"><br /><br />
+        <input type="submit" value="Lista de operações, da mais nova para a mais antiga" class="btn btn-primary"><br /><br />
     </form>
 
     <form th:action="@{'/operacoes'}" method="POST" th:object="${playMoney}">
