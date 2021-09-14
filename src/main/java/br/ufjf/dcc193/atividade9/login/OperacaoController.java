@@ -1,5 +1,6 @@
 package br.ufjf.dcc193.atividade9.login;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import br.ufjf.dcc193.atividade9.login.model.Operacao;
+import br.ufjf.dcc193.atividade9.login.model.OperacaoService;
 import br.ufjf.dcc193.atividade9.login.model.Usuario;
 import br.ufjf.dcc193.atividade9.login.model.UsuarioService;
 
@@ -18,6 +21,8 @@ import br.ufjf.dcc193.atividade9.login.model.UsuarioService;
 public class OperacaoController {
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private OperacaoService operacaoService;
     String partidaAtual;
     String contaAtual;
 
@@ -51,6 +56,15 @@ public class OperacaoController {
                 if (usuario.getConta().equals(contaAtual)) {
                     usuario.setMontante((usuario.getMontante() - playMoney.getMontante()));
                     usuarioService.updateMontante(usuario);
+
+                    Operacao operacao = new Operacao();
+                    operacao.setPartida(usuario.getPartida());
+                    operacao.setConta(contaAtual);
+                    operacao.setData(new Date());
+                    operacao.setHora(new Date());
+                    operacao.setMontante(playMoney.getMontante());
+                    operacao.setOperacao("Pagou para: ");
+                    operacaoService.insert(operacao);
                 }
             }
 
