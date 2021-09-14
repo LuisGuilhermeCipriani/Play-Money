@@ -18,8 +18,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
     @Override
     public int count() throws DataAccessException {
-        // TODO Auto-generated method stub
-        return 0;
+        Integer n = (Integer) jdbc.queryForObject("SELECT COUNT(*) FROM usuario", Integer.class);
+        return n;
     }
 
     @Override

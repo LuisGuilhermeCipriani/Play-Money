@@ -11,6 +11,19 @@
 </head>
 
 <body class="text-center">
+
+    <script>
+        function habilitar() {
+            document.getElementById('conta').type = "text";
+            document.getElementById('conta').disabled = false;
+        }
+
+        function desabilitar() {
+            document.getElementById('conta').type = "hidden";
+            document.getElementById('conta').disabled = true;
+        }
+    </script>
+
     <br /> <br />
     <h1>Operações</h1>
     <form method="POST" th:object="${playMoney}" class="container">
@@ -24,22 +37,27 @@
             </label><br /><br />
 
             <label>
-                <input id="bancoRadio" name="bancoRadio" th:field="*{destino}" type="radio" value="bancoRadio" checked="checked" /><label
-                    for="bancoRadio"></label>
+                <input id="bancoRadio" name="bancoRadio" onclick="desabilitar()" th:field="*{destino}" type="radio"
+                    value="bancoRadio" /><label for="bancoRadio"></label>
                 Banco</label>
             <div>
-                <input id="contaRadio" name="contaRadio" th:field="*{destino}" type="radio" value="contaRadio" /><label for="contaRadio">
+                <input id="contaRadio" name="contaRadio" onclick="habilitar()" th:field="*{destino}" type="radio"
+                    value="contaRadio" /><label for="contaRadio">
                     Conta</label>
             </div>
-            </label>
+            </label><br/>
 
             <div class="form-group">
-                <input placeholder="Informe a conta" class="form-control" type="text" th:field="*{conta}"
-                    th:classappend="${#fields.hasErrors('conta')? 'is-invalid' : ''}" />
-                <strong class="text-danger" th:if="${#fields.hasErrors('conta')}" th:errors="*{conta}">Mensagem de
-                    erro do montante</strong>
-            </div><br/><br/>
-
+                <label>
+                    <input id="conta" name="conta" placeholder="Informe a conta" type="hidden"
+                        disabled th:field="*{conta}"
+                        th:classappend="${#fields.hasErrors('conta')? 'is-invalid' : ''}" />
+                    <strong class="text-danger" th:if="${#fields.hasErrors('conta')}" th:errors="*{conta}">Mensagem de
+                        erro do montante</strong>
+                </label>
+            </div><br /><br />
+        </div>
+        <div>
             <input type="submit" name="pagar" th:formaction="@{'/pagar'}" value="Pagar"
                 class="col-sm-3 btn btn-primary" />
             <input type="submit" name="receber" th:formaction="@{'/receber'}" value="Receber"

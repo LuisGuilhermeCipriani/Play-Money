@@ -11,16 +11,22 @@
         <div class="page-header">
             <h1>Operações por contas</h1>  
         </div>   
-           <table class="table table-bordered table-striped">
-               <thead>
-                   <th>Conta</th>
-               </thead>
-               <tbody>
-                   <tr th:each="operacao : ${operacoes}">
-                       <td th:text=${operacao.pagar}></td>
-                   </tr>
-               </tbody>
-           </table>
+           
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Partida</th>
+                    <th>Conta</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.partida}">Partida</td>
+                    <td th:text="${usuario.conta}">Conta</td>
+                </tr>
+            </tbody>
+        </table>
+
     </main>    
     
 </body>
