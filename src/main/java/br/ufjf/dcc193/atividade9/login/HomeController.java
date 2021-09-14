@@ -4,11 +4,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class HomeController {
+
+    @GetMapping("/home")
+    public String getPartida(@ModelAttribute PlayMoney playMoney, Model model){
+        return "login/home";
+    }
+
+    @PostMapping("/home")
+    public String postPartida(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model){
+        
+        if(bindingResult.hasErrors()){
+            return getPartida(playMoney, model);
+        } else {
+            return "login/home";
+        }
+    }
     /*@GetMapping("/home.html")
     public String getHome(Model model){
         model.addAttribute("conteudo", "login/home::conteudo");
@@ -43,7 +59,7 @@ public class HomeController {
     @PostMapping("/operacoes")
     public String postOperacoes(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
 
-        return "login/operacoes";
+        return "redirect:/formularioOperacoes";
     }
 
     @PostMapping("/operacoesContas")

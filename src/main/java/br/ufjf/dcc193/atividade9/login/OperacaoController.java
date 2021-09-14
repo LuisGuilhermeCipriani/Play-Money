@@ -1,8 +1,6 @@
 package br.ufjf.dcc193.atividade9.login;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,38 +18,69 @@ import br.ufjf.dcc193.atividade9.login.model.UsuarioService;
 public class OperacaoController {
     @Autowired
     private UsuarioService usuarioService;
-    
-    @GetMapping("/operacao")
-    public String getOperaco(@ModelAttribute PlayMoney playMoney, Model model) {
-        Map<String, String> destino = new LinkedHashMap<>();
-        destino.put("Banco", "true");
-        destino.put("Conta", "false");
-        model.addAttribute("destino", destino);
+    String partidaAtual;
+    String contaAtual;
+
+    @GetMapping("/formularioOperacoes")
+    public String getOperacao(@ModelAttribute PlayMoney playMoney, Model model) {
+        partidaAtual = LoginController.partidaAtual;
+        contaAtual = LoginController.contaAtual;
+        System.out.println("PARTIDA " + partidaAtual + ", CONTA: " + contaAtual);
         return "login/operacoes";
     }
 
+    @PostMapping("/formularioOperacoes")
+    public String postOperacao(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
+            Model model) {
 
+        if (bindingResult.hasErrors()) {
+            return getOperacao(playMoney, model);
+        } else {
+            return "redirect:/home";
+        }
+    }
+
+    /*
+     * @GetMapping("/operacao") public String getOperaco(@RequestParam("descricao")
+     * String descricao) { //Map<String, String> destino = new LinkedHashMap<>();
+     * //destino.put("Banco", "true"); //destino.put("Conta", "false");
+     * //model.addAttribute("destino", destino); System.out.println("descrição: " +
+     * descricao); return ""; }
+     */
+
+    /*
+     * @RequestMapping(value = "/{partida}/{conta}", method = RequestMethod.GET)
+     * public String post(@PathVariable("partida") String
+     * partida, @PathVariable("conta") String conta) {
+     * System.out.println("Partida: " + partida + ", Conta: " + conta); return ""; }
+     */
 
     @PostMapping("/pagar")
     public String postPagar(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
 
         List<Usuario> listaUsuarios = usuarioService.selectAll();
 
-        if(playMoney.getDestino().equals("bancoRadio")){
-            
-            /*for (Usuario usuario : listaUsuarios) {
-                if(usuario.getConta().equals(playMoney.getConta())){
+        if (playMoney.getDestino().equals("bancoRadio")) {
+
+            for (Usuario usuario : listaUsuarios) {
+                if (usuario.getConta().equals(contaAtual)) {
                     usuario.setMontante((usuario.getMontante() - playMoney.getMontante()));
                     usuarioService.updateMontante(usuario);
                 }
-            }*/
+            }
 
-        }else if(playMoney.getDestino().equals("contaRadio")){
-            
+        } else if (playMoney.getDestino().equals("contaRadio")) {
+
             for (Usuario usuario : listaUsuarios) {
-                if(usuario.getConta().equals(playMoney.getConta())){
-                    usuario.setMontante((usuario.getMontante() + playMoney.getMontante()));
-                    usuarioService.updateMontante(usuario);
+                if (usuario.getConta().equals(contaAtual)) {
+                    for (Usuario usuario2 : listaUsuarios) {
+                        if (usuario2.getConta().equals(playMoney.getConta())) {
+                            usuario.setMontante((usuario.getMontante() - playMoney.getMontante()));
+                            usuario2.setMontante((usuario2.getMontante() + playMoney.getMontante()));
+                            usuarioService.updateMontante(usuario);
+                            usuarioService.updateMontante(usuario2);
+                        }
+                    }
                 }
             }
         }
@@ -59,9 +88,35 @@ public class OperacaoController {
     }
 
     @PostMapping("/receber")
-    public String postReceber(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
+    public String postReceber(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
+            Model model) {
 
-        System.out.println("Chegou no receber");
-        return "login/operacoes";
+                List<Usuario> listaUsuarios = usuarioService.selectAll();
+
+                if (playMoney.getDestino().equals("bancoRadio")) {
+        
+                    for (Usuario usuario : listaUsuarios) {
+                        if (usuario.getConta().equals(contaAtual)) {
+                            usuario.setMontante((usuario.getMontante() + playMoney.getMontante()));
+                            usuarioService.updateMontante(usuario);
+                        }
+                    }
+        
+                } else if (playMoney.getDestino().equals("contaRadio")) {
+        
+                    for (Usuario usuario : listaUsuarios) {
+                        if (usuario.getConta().equals(contaAtual)) {
+                            for (Usuario usuario2 : listaUsuarios) {
+                                if (usuario2.getConta().equals(playMoney.getConta())) {
+                                    usuario.setMontante((usuario.getMontante() + playMoney.getMontante()));
+                                    usuario2.setMontante((usuario2.getMontante() - playMoney.getMontante()));
+                                    usuarioService.updateMontante(usuario);
+                                    usuarioService.updateMontante(usuario2);
+                                }
+                            }
+                        }
+                    }
+                }
+                return "login/operacoes";
     }
 }
