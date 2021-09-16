@@ -21,7 +21,7 @@
                 th:classappend="${#fields.hasErrors('partida')? 'is-invalid' : ''}" />
                 <input type="submit" th:formaction="@{'/partida'}" value="Entrar" class="btn btn-primary"><br/><br/>
                 <strong class="text-danger" th:if="${#fields.hasErrors('partida')}" 
-                th:errors="*{partida}">Mensagem de erro da partida</strong>
+                th:errors="*{partida}">Mensagem de erro da partida</strong><br/><br/>
                 <input type="submit" th:formaction="@{'/novaPartida'}" value="Criar Nova Partida" class="btn btn-primary">
             </label>
         </div>

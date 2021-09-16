@@ -7,10 +7,11 @@ import lombok.Data;
 @Data
 public class Operacao {
     
+    private Integer idOperacao;
     private String partida;
     private String conta;
-    private Date data;
-    private Date hora;
+    private Date dataHora;
     private Double montante;
     private String operacao = "";
+    private String destino = "";
 }

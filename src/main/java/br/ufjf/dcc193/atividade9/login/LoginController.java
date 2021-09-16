@@ -10,27 +10,6 @@ public class LoginController {
     public static String partidaAtual = "";
     public static String contaAtual = "";
 
-    /*@GetMapping("/a")
-    public String getLogin(@ModelAttribute PlayMoney playMoney, Model model) {
-        return "login/login";
-    }
-
-    @PostMapping("/b")
-    public String postLogin(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult, Model model) {
-
-        if (bindingResult.hasErrors()) {
-            return "login/login";
-        } else {
-            if (playMoney.getPartida().isEmpty()) {
-                return "login/partida";
-            }
-            if (playMoney.getConta().isEmpty()) {
-                return "login/conta";
-            }
-        }
-        return "login/home";
-    }*/
-
     @RequestMapping("/login")
     public String getUrl(@RequestParam("partida") String partida, @RequestParam("conta") String conta) {
         LoginController.partidaAtual = partida;
@@ -41,6 +20,6 @@ public class LoginController {
         }else if(conta.trim().isEmpty()){
             return "redirect:/conta";
         }
-        return "redirect:/home";
+        return "redirect:/operacao";
     }
 }

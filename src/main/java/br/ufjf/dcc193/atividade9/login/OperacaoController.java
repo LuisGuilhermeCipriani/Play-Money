@@ -1,5 +1,6 @@
 package br.ufjf.dcc193.atividade9.login;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,23 +26,25 @@ public class OperacaoController {
     private OperacaoService operacaoService;
     String partidaAtual;
     String contaAtual;
+    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-    @GetMapping("/formularioOperacoes")
-    public String getOperacao(@ModelAttribute PlayMoney playMoney, Model model) {
+    @GetMapping("/operacao")
+    public String getUsuarios(@ModelAttribute PlayMoney playMoney, Model model) {
         partidaAtual = LoginController.partidaAtual;
         contaAtual = LoginController.contaAtual;
-        System.out.println("PARTIDA " + partidaAtual + ", CONTA: " + contaAtual);
-        return "login/operacoes";
+        List<Operacao> operacoes = operacaoService.selectAll();
+        model.addAttribute("operacao", operacoes);
+        return "login/operacao";
     }
 
-    @PostMapping("/formularioOperacoes")
-    public String postOperacao(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
+    @PostMapping("/operacao")
+    public String postUsuarios(@ModelAttribute @Validated PlayMoney playMoney, BindingResult bindingResult,
             Model model) {
 
         if (bindingResult.hasErrors()) {
-            return getOperacao(playMoney, model);
+            return getUsuarios(playMoney, model);
         } else {
-            return "redirect:/home";
+            return "login/operacao";
         }
     }
 
@@ -60,10 +63,10 @@ public class OperacaoController {
                     Operacao operacao = new Operacao();
                     operacao.setPartida(usuario.getPartida());
                     operacao.setConta(contaAtual);
-                    operacao.setData(new Date());
-                    operacao.setHora(new Date());
+                    operacao.setDataHora(new Date());
                     operacao.setMontante(playMoney.getMontante());
-                    operacao.setOperacao("Pagou para: ");
+                    operacao.setOperacao("Pagar");
+                    operacao.setDestino("Banco");
                     operacaoService.insert(operacao);
                 }
             }
@@ -78,12 +81,22 @@ public class OperacaoController {
                             usuario2.setMontante((usuario2.getMontante() + playMoney.getMontante()));
                             usuarioService.updateMontante(usuario);
                             usuarioService.updateMontante(usuario2);
+
+                            Operacao operacao = new Operacao();
+                            operacao.setPartida(usuario.getPartida());
+                            operacao.setConta(contaAtual);
+                            operacao.setDataHora(new Date());
+                            operacao.setMontante(playMoney.getMontante());
+                            operacao.setOperacao("Pagar");
+                            operacao.setDestino(usuario2.getConta());
+                            operacaoService.insert(operacao);
                         }
                     }
                 }
             }
         }
-        return "login/operacoes";
+        this.getUsuarios(playMoney, model);
+        return "login/operacao";
     }
 
     @PostMapping("/receber")
@@ -98,6 +111,15 @@ public class OperacaoController {
                 if (usuario.getConta().equals(contaAtual)) {
                     usuario.setMontante((usuario.getMontante() + playMoney.getMontante()));
                     usuarioService.updateMontante(usuario);
+
+                    Operacao operacao = new Operacao();
+                    operacao.setPartida(usuario.getPartida());
+                    operacao.setConta(contaAtual);
+                    operacao.setDataHora(new Date());
+                    operacao.setMontante(playMoney.getMontante());
+                    operacao.setOperacao("Receber");
+                    operacao.setDestino("Banco");
+                    operacaoService.insert(operacao);
                 }
             }
 
@@ -111,24 +133,21 @@ public class OperacaoController {
                             usuario2.setMontante((usuario2.getMontante() - playMoney.getMontante()));
                             usuarioService.updateMontante(usuario);
                             usuarioService.updateMontante(usuario2);
+
+                            Operacao operacao = new Operacao();
+                            operacao.setPartida(usuario.getPartida());
+                            operacao.setConta(contaAtual);
+                            operacao.setDataHora(new Date());
+                            operacao.setMontante(playMoney.getMontante());
+                            operacao.setOperacao("Receber");
+                            operacao.setDestino(usuario2.getConta());
+                            operacaoService.insert(operacao);
                         }
                     }
                 }
             }
         }
-        return "login/operacoes";
+        this.getUsuarios(playMoney, model);
+        return "login/operacao";
     }
-
-    /*@GetMapping("/operacoesContas")
-    public String teste(Model model){
-        try{
-            List<Usuario> usuarios = usuarioService.selectAll();
-            model.addAttribute("usuarios", usuarios);
-            return "login/operacoesContas";
-        } catch (Exception e){
-            e.printStackTrace();
-            return "erro";
-        }
-    }*/
-
 }

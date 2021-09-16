@@ -43,7 +43,7 @@ public class PartidaController {
             for (Usuario usuario : listaUsuarios) {
                 if (usuario.getConta().equals(contaAtual)) {
                     if (usuario.getPartida().equals(playMoney.getPartida())) {
-                        return "login/home";
+                        return "login/operacao";
                     }
                 }
             }
@@ -64,6 +64,7 @@ public class PartidaController {
                 if (usuario.getConta().equals(contaAtual)) {
                     usuario.setPartida(geraIdentificadorAleatorio(6));
                     usuarioService.updatePartida(usuario);
+                    playMoney.setPartida(usuario.getPartida());
                 }
             }
             return "login/partida";

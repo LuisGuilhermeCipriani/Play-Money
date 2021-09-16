@@ -18,19 +18,25 @@ public class OperacaoDAOImpl implements OperacaoDAO{
 
     @Override
     public int count() throws DataAccessException {
+        /*int quantidadeOperacoes = 0;
+        for (Operacao operacao : selectAll()) {
+            quantidadeOperacoes += 1;
+        }
+        return quantidadeOperacoes;*/
         Integer n = (Integer) jdbc.queryForObject("SELECT COUNT(*) FROM operacao", Integer.class);
         return n;
     }
 
     @Override
     public int insertOne(Operacao operacao) throws DataAccessException {
-        int n = jdbc.update("INSERT INTO operacao(conta, partida, data, hora, montante, operacao) VALUES(?,?,?,?,?,?);",
+        int n = jdbc.update("INSERT INTO operacao(idOperacao, conta, partida, dataHora, montante, operacao, destino) VALUES(?,?,?,?,?,?,?);",
+        operacao.getIdOperacao(),
         operacao.getConta(),
         operacao.getPartida(),
-        operacao.getData(),
-        operacao.getHora(),
+        operacao.getDataHora(),
         operacao.getMontante(),
-        operacao.getOperacao()
+        operacao.getOperacao(),
+        operacao.getDestino()
         );
         return n;
     }
@@ -68,12 +74,13 @@ public class OperacaoDAOImpl implements OperacaoDAO{
         List<Map<String, Object>> resultados = jdbc.queryForList("SELECT * FROM operacao");
         for(Map<String, Object> resultado: resultados){
             Operacao operacao = new Operacao();
+            operacao.setIdOperacao((Integer) resultado.get("idOperacao"));
             operacao.setPartida((String)resultado.get("partida"));
             operacao.setConta((String)resultado.get("conta"));
-            operacao.setData((Date)resultado.get("data"));
-            operacao.setHora((Date)resultado.get("hora"));
+            operacao.setDataHora((Date)resultado.get("dataHora"));
             operacao.setMontante((Double)resultado.get("montante"));
             operacao.setOperacao((String)resultado.get("operacao"));
+            operacao.setDestino((String)resultado.get("destino"));
             operacoes.add(operacao);
         }
         return operacoes;

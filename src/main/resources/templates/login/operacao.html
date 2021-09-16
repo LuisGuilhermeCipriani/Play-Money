@@ -45,13 +45,12 @@
                     value="contaRadio" /><label for="contaRadio">
                     Conta</label>
             </div>
-            </label><br/>
+            </label><br />
 
             <div class="form-group">
                 <label>
-                    <input id="conta" name="conta" placeholder="Informe a conta" type="hidden"
-                        disabled th:field="*{conta}"
-                        th:classappend="${#fields.hasErrors('conta')? 'is-invalid' : ''}" />
+                    <input id="conta" name="conta" placeholder="Informe a conta" type="hidden" disabled
+                        th:field="*{conta}" th:classappend="${#fields.hasErrors('conta')? 'is-invalid' : ''}" />
                     <strong class="text-danger" th:if="${#fields.hasErrors('conta')}" th:errors="*{conta}">Mensagem de
                         erro do montante</strong>
                 </label>
@@ -63,7 +62,37 @@
             <input type="submit" name="receber" th:formaction="@{'/receber'}" value="Receber"
                 class="col-sm-3 btn btn-primary" />
         </div>
-    </form>
+    </form><br/><br/>
+
+    <div class="text-center"> 
+        <center>
+        <table class="text-center">
+            <thead class="text-center">
+                <tr class="text-center">
+                    <th>Lista de Operações</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr>
+                    <td>Conta:</td>
+                    <td>Operação</td>
+                    <td>Montante</td>
+                    <td>Destino</td>
+                    <td>Data</td>
+                </tr>
+                <tr th:each="operacao : ${operacao}" class="text-center">
+                    <td th:text="${operacao.conta}" class="text-center"></td>
+                    <td th:text="${operacao.operacao}" class="text-center"></td>
+                    <td th:text="${operacao.montante}" class="text-center"></td>
+                    <td th:text="${operacao.destino}" class="text-center"></td>
+                    <td th:text="${#dates.format(operacao.dataHora, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#dates.format(operacao.dataHora, 'hh:mm:ss')}"></td>
+                </tr>
+            </tbody>
+        </table>
+        </center>
+    </div>
+
 </body>
 
 

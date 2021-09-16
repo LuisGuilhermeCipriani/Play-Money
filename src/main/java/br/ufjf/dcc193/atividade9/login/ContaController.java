@@ -32,7 +32,7 @@ public class ContaController {
 
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getConta().equals(playMoney.getConta())){
-                return "login/home";
+                return "login/operacao";
             }
         }
         return "login/conta";
